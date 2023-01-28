@@ -1,0 +1,46 @@
+{
+    "created_time": "00:51:33",
+    "bot": {
+        "prefix": "!",
+        "token": "Здесь ваш Discord Токен"
+    },
+    "server": {
+        "admin_role": "Admin",
+        "moderator_role": "Moderator",
+        "url_pict": "https://sun6-22.userapi.com/s/v1/if2/NAGQWs8ol63beuq3a8XoK9kt62oVZUhP7TtwnDxnvHTZbsACAHkL85DiQp06epcbU6-UISgXXpv3uqWwlQY70Eph.jpg?size=2048x2048&quality=96&crop=18,0,2048,2048&ava=1",
+        "channel_id_first_team": 1068250223668895845,
+        "channel_id_second_team": 1068250218031759360,
+        "score_win_player": 15,
+        "score_lose_player": 10,
+        "score_win_trener": 25,
+        "score_lose_trener": 15,
+        "score_draw_player": 15,
+        "score_draw_trener": 15
+    },
+    "positionstext": {
+        "title": "Доброе времени суток!",
+        "description": "**Пожалуйста, выберите нужную роль**\n(*Можно перевыбрать*)\nПовторное нажатие на позицию, которая у вас есть, снимет ее",
+        "photo": "https://sun9-30.userapi.com/impg/gQ0X-nB91mm6K9VbIKpOjCxtykdqIRn6DgKBhw/5zMBhQEUVJ0.jpg?size=839x554&quality=96&sign=929766d1f615a8678be82148b12fa37c&type=album"
+    },
+    "positions": {
+        "list_postitions": [
+            "вратарь",
+            "защитник",
+            "нападающий",
+            "полузащитник",
+            "форвард"
+        ]
+    },
+    "text": {
+        "clear": "Удаление завершено. Уничтожено **{amount}** сообщений",
+        "successfully": "Успешно!"
+    },
+    "startgame": {
+        "title": "Старт игры №{game_id}",
+        "description": "Желающие стать капитаном, нажмите кнопку '**Регистрация**'"
+    },
+    "StartGame_with_capitans": {
+        "title": "Выберите команду",
+        "description": "После того, как вас капитаны определили, выберите **нужную команду**"
+    }
+}
