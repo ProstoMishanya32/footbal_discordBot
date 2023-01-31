@@ -11,6 +11,7 @@ class Config(CreatingConfig):
         self.positions = self.Positions(config = self)
         self.text = self.Text(config = self)
         self.startGame_with_capitans = self.StartGame_with_capitans(config = self)
+        self.create_game = self.Create_Game(config = self)
     class Bot:
         def __init__(self, config : CreatingConfig) -> None:
             self.token = config.config_field(key = 'token', layer = 'bot', default = 'Здесь ваш Discord Токен')
@@ -22,6 +23,8 @@ class Config(CreatingConfig):
             self.url_pict = config.config_field(key='url_pict', layer='server',  default='Ссылка на Аватарку вашего канала')
             self.channel_id_first_team =  config.config_field(key='channel_id_first_team', layer='server',  default='ID канала первой группы')
             self.channel_id_second_team = config.config_field(key='channel_id_second_team', layer='server',    default='ID канала второй группы')
+            self.channel_id_three_team =  config.config_field(key='channel_id_three_team', layer='server',  default='ID канала третьей группы')
+            self.channel_id_four_team = config.config_field(key='channel_id_four_team', layer='server',    default='ID канала четвертой группы')
             self.score_win_player =  config.config_field(key='score_win_player', layer='server',    default='Количество очков для игроков, которые выиграли')
             self.score_lose_player =  config.config_field(key='score_lose_player', layer='server',    default='Количество очков для игроков, которые проиграли')
             self.score_draw_player = config.config_field(key='score_draw_player', layer='server', default='Количество очков для игроков, если ничья')
@@ -45,6 +48,10 @@ class Config(CreatingConfig):
         def __init__(self, config: CreatingConfig) -> None:
             self.list_postitions = config.config_field(key = 'list_postitions', layer = 'positions', default = ["вратарь", "защитник", "нападающий", "полузащитники", "форвард"])
 
+    class Create_Game:
+        def __init__(self, config: CreatingConfig) -> None:
+            self.title = config.config_field(key='title', layer='Create_Game', default='Заголовок создание игры')
+            self.description = config.config_field(key='description', layer='Create_Game',default='Описание создание игры')
     class Text:
         def __init__(self, config: CreatingConfig) -> None:
             self.clear = config.config_field(key='clear', layer='text', default='')

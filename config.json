@@ -2,7 +2,7 @@
     "created_time": "00:51:33",
     "bot": {
         "prefix": "!",
-        "token": "Здесь ваш Discord Токен"
+        "token": "OTk0Njg4OTE3MTc1NTQxNzgw.Gp7DkT.iL-m9KRuUttuUZym7Pg2OGxSZkCJNCA8iNYu2I"
     },
     "server": {
         "admin_role": "Admin",
@@ -15,7 +15,9 @@
         "score_win_trener": 25,
         "score_lose_trener": 15,
         "score_draw_player": 15,
-        "score_draw_trener": 15
+        "score_draw_trener": 15,
+        "channel_id_three_team": 1069657635072266341,
+        "channel_id_four_team": 1069657687995977760
     },
     "positionstext": {
         "title": "Доброе времени суток!",
@@ -42,5 +44,9 @@
     "StartGame_with_capitans": {
         "title": "Выберите команду",
         "description": "После того, как вас капитаны определили, выберите **нужную команду**"
+    },
+    "Create_Game": {
+        "title": "Создание игры",
+        "description": "**Выберите, сколько команд будет в игре**"
     }
 }
