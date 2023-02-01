@@ -23,8 +23,7 @@ def create_pict(list_raiting, ctx, player):
     image_background = Image.open('modules/image/canvas.png')
     img = image_background.resize((1080, 1499))
     #Аватар
-    url = str(ctx.author.avatar)[:-10]
-    responce = requests.get(url, stream=True)
+    responce = requests.get(str(ctx.author.display_avatar), stream=True)
     responce = Image.open(io.BytesIO(responce.content))
     responce = responce.convert('RGBA')
     responce = responce.resize((245, 245), Image.ANTIALIAS)
