@@ -44,27 +44,18 @@ class DataBase:
             raiting = self.cur.execute("SELECT raiting FROM raiting WHERE id_member = ?", (user_id,)).fetchone()
         return raiting[0]
 
-    def get_raiting_top_players(self):
-        raiting = self.cur.execute("SELECT member, raiting, id_member FROM raiting ORDER BY raiting DESC LIMIT 10 ").fetchall()
-        top100 = []
-        current_position = 1
-        for row in raiting:
-            character = dict()
-            character['member'] = row[0]
-            character['raiting'] = row[1]
-            character['id_member'] = row[2]
-            character['position'] = current_position
-            top100.append(character)
-            current_position += 1
-        return top100
 
-    def get_raiting_top_capitans(self, user_id, user_name):
-        capitan = self.cur.execute("SELECT raiting FROM raiting_capitans WHERE id_member = ?", (user_id,)).fetchone()
-        if capitan == None:
-            self.cur.execute('INSERT INTO raiting_capitans(id_member, member) VALUES (?, ?)', (user_id, user_name))
-            self.connection.commit()
-        raiting = self.cur.execute("SELECT member, raiting, id_member FROM raiting_capitans ORDER BY raiting DESC LIMIT 10 ").fetchall()
-        top100 = []
+
+    def get_raiting_top(self, user_id, user_name, table):
+        if user_id == None and user_name == None:
+            raiting = self.cur.execute(f"SELECT member, raiting, id_member FROM {table} ORDER BY raiting DESC LIMIT 10 ").fetchall()
+        else:
+            players = self.cur.execute(f"SELECT raiting FROM {table} WHERE id_member = ?", (user_id,)).fetchone()
+            if players == None:
+                self.cur.execute(f"INSERT INTO {table}(id_member, member) VALUES (?, ?)", (user_id, user_name))
+                self.connection.commit()
+            raiting = self.cur.execute(f"SELECT member, raiting, id_member FROM {table} ORDER BY raiting DESC LIMIT 10 ").fetchall()
+        top = []
         current_position = 1
         for row in raiting:
             character = dict()
@@ -72,9 +63,12 @@ class DataBase:
             character['raiting'] = row[1]
             character['id_member'] = row[2]
             character['position'] = current_position
-            top100.append(character)
+            top.append(character)
             current_position += 1
-        return top100
+        return top
+
+
+
     def create_game(self, time, amount_team):
         self.cur.execute("""
         CREATE TABLE IF NOT EXISTS

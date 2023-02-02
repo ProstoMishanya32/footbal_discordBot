@@ -5,7 +5,7 @@ import os
 import textwrap
 
 
-def create_pict(list_raiting, ctx, player):
+def create_pict(list_raiting, interaction, player):
     message_rank = ''
     message_user_rank = ''
     for character in list_raiting:
@@ -16,14 +16,14 @@ def create_pict(list_raiting, ctx, player):
         else:
             character['position'] = f"{character['position']}."
             character['raiting'] = f" - {character['raiting']} Очков"
-        if character['id_member'] == ctx.author.id: #Поиск ID пользователя
+        if character['id_member'] == interaction.user.id: #Поиск ID пользователя
             message_user_rank = f"{character['member']} {character['position']} Место\n\n{character['raiting']}"
         message_rank += f"{character['position']} {character['member']}{character['raiting']}\n\n"
     # Вставляем пустой фон
     image_background = Image.open('modules/image/canvas.png')
     img = image_background.resize((1080, 1499))
     #Аватар
-    responce = requests.get(str(ctx.author.display_avatar), stream=True)
+    responce = requests.get(str(interaction.user.display_avatar), stream=True)
     responce = Image.open(io.BytesIO(responce.content))
     responce = responce.convert('RGBA')
     responce = responce.resize((245, 245), Image.ANTIALIAS)
