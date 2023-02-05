@@ -19,6 +19,7 @@ class Config(CreatingConfig):
         def __init__(self, config : CreatingConfig) -> None:
             self.token = config.config_field(key = 'token', layer = 'bot', default = 'Здесь ваш Discord Токен')
             self.prefix = config.config_field(key = 'prefix', layer = 'bot', default = '!')
+            self.guilds = config.config_field(key = 'guilds', layer = 'bot', default = [])
     class Server:
         def __init__(self, config: CreatingConfig) -> None:
             self.admin_role = config.config_field(key = 'admin_role', layer = 'server', default= 'Здесь название Админ роли')

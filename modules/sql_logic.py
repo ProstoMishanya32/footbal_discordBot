@@ -48,7 +48,7 @@ class DataBase:
 
     def get_raiting_top(self, user_id, user_name, table):
         if user_id == None and user_name == None:
-            raiting = self.cur.execute(f"SELECT member, raiting, id_member FROM {table} ORDER BY raiting DESC LIMIT 10 ").fetchall()
+            raiting = self.cur.execute(f"SELECT member, raiting, id_member FROM {table} ORDER BY raiting DESC ").fetchall()
         else:
             players = self.cur.execute(f"SELECT raiting FROM {table} WHERE id_member = ?", (user_id,)).fetchone()
             if players == None:

@@ -10,19 +10,23 @@ from datetime import datetime
 import pytz
 import random
 
+def check_admin(roles):
+    for i in roles:
+        if str(i) == config.server.admin_role or str(i) == config.server.moderator_role:
+            return True
+
 class Raiting(commands.Cog):
     def __init__(self, bot: Bot) -> None:
         self.bot = bot
 
-
-    @nextcord.slash_command(name="raiting", description="Посмотреть свой рейтинг", guild_ids= [1057047620524179556])
+    @nextcord.slash_command(name="raiting", description="Посмотреть свой рейтинг", guild_ids = config.bot.guilds)
     async def get_raiting_top_players(self, interaction: nextcord.Interaction ):
         await interaction.response.defer()
         result = db.get_raiting_top(interaction.user.id, str(interaction.user), "raiting")
         create_pict_raiting.create_pict(result, interaction, "player")
         await interaction.followup.send(file = nextcord.File(fp = 'user_card.png'))
 
-    @nextcord.slash_command(name="raiting_capitans", description="Посмотреть свой рейтинг Капитанов", guild_ids= [1057047620524179556])
+    @nextcord.slash_command(name="raiting_capitans", description="Посмотреть свой рейтинг Капитанов", guild_ids = config.bot.guilds)
     async def get_raiting_top_capitans(self, interaction: nextcord.Interaction ):
         await interaction.response.defer()
         result = db.get_raiting_top(interaction.user.id, str(interaction.user), "raiting_capitans")
@@ -30,29 +34,30 @@ class Raiting(commands.Cog):
         await interaction.followup.send(file = nextcord.File(fp = 'user_card.png'))
 
 
-    @commands.command(aliases=['рейтинг_и', 'Рейтинг_и', 'Raiting_all', 'raiting_all']) #Варианты вызова функции
-    @commands.has_any_role(config.server.admin_role, config.server.moderator_role)
-    async def get_raiting_top_players_all(self, ctx):
-        await ctx.channel.purge(limit = 1)
-        result = db.get_raiting_top(None, None, "raiting")
-        message = ''
-        if result:
-            for character in result:
-                if character['member'] == None:
-                    character['position'] = ""
-                    character['member'] = ''
-                    character['raiting'] = ''
-                else:
-                    character['position'] = f"{character['position']}."
-                    character['raiting'] = f" - {character['raiting']} очков"
-                message += f"{character['position']} {character['member']}{character['raiting']}\n"
-            emb = nextcord.Embed(title=f'''**Рейтинг всех игроков**''', description=f'''{message}''', colour=0xe74c3c)
-            await ctx.send(embed=emb)
+    @nextcord.slash_command(name="raiting_players", description=  "Посмотреть рейтинг всех игроков", guild_ids= config.bot.guilds)
+    async def get_raiting_top_players_all(self, interaction: nextcord.Interaction ):
+        await interaction.response.defer()
+        if check_admin(interaction.user.roles):
+            result = db.get_raiting_top(None, None, "raiting")
+            message = ''
+            if result:
+                for character in result:
+                    if character['member'] == None:
+                        character['position'] = ""
+                        character['member'] = ''
+                        character['raiting'] = ''
+                    else:
+                        character['position'] = f"{character['position']}."
+                        character['raiting'] = f" - {character['raiting']} очков"
+                    message += f"{character['position']} {character['member']}{character['raiting']}\n"
+                emb = nextcord.Embed(title=f'''**Рейтинг всех игроков**''', description=f'''{message}''', colour=0xe74c3c)
+                await interaction.followup.send(embed=emb)
+        else:
+            await interaction.followup.send("**Ох нет:( У вас недостаточно прав**")
 
-    @commands.command(aliases=['рейтинг_к', 'Рейтинг_к'])  # Варианты вызова функции
-    @commands.has_any_role(config.server.admin_role, config.server.moderator_role)
-    async def get_raiting_top_capitans_all(self, ctx):
-        await ctx.channel.purge(limit = 1)
+    @nextcord.slash_command(name="raiting_capitans_all", description=  "Посмотреть рейтинг капитанов всех игроков", guild_ids= config.bot.guilds)
+    async def get_raiting_top_capitans_all(self, interaction: nextcord.Interaction ):
+        await interaction.response.defer()
         result = db.get_raiting_top(None, None, "raiting_capitans")
         message = ''
         if result:
@@ -66,7 +71,7 @@ class Raiting(commands.Cog):
                     character['raiting'] = f" - {character['raiting']} очков"
                 message += f"{character['position']} {character['member']}{character['raiting']}\n"
             emb = nextcord.Embed(title=f'''**Рейтинг всех капитанов**''', description=f'''{message}''', colour=0xe74c3c)
-            await ctx.send(embed=emb)
+            await interaction.followup.send(embed=emb)
 
 
 

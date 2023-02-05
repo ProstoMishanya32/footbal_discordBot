@@ -46,6 +46,12 @@ async def selected_team(interaction, game, team):
 
 async def exit_team(interaction, game):
     try:
+        list_id = db.get_id_players(game)
+        guild = interaction.guild
+        for i in list_id:
+            member = nextcord.utils.get(guild.members, id=i[0])
+            for row in config.server.roles_team:
+                await member.remove_roles(nextcord.utils.get(guild.roles, name=row))
         db.delete_player(game, interaction.user.id)
     except Exception as i:
         pass
