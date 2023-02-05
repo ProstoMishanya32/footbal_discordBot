@@ -2,10 +2,14 @@
     "created_time": "00:51:33",
     "bot": {
         "prefix": "!",
-        "token": "MTA3MDM5NDU0NzAwOTUwMzI3Mw.G1m7s6.5tcz-QOTF3VV6vFYOwe2s4uiMr9Qhj8wnXdIRY"
+        "token": "OTk0Njg4OTE3MTc1NTQxNzgw.G-6Qn0.90cevMAyDYRiPWX_Zd1VJspi9TpxeZlO2fJb1Y",
+        "guilds": [
+            1057047620524179556,
+            787562806416637963
+        ]
     },
     "server": {
-        "admin_role": "Кот в доме главный",
+        "admin_role": "Admin",
         "moderator_role": "Главный Модератор",
         "url_pict": "https://sun6-22.userapi.com/s/v1/if2/NAGQWs8ol63beuq3a8XoK9kt62oVZUhP7TtwnDxnvHTZbsACAHkL85DiQp06epcbU6-UISgXXpv3uqWwlQY70Eph.jpg?size=2048x2048&quality=96&crop=18,0,2048,2048&ava=1",
         "channel_id_first_team": 1018260502272552980,
@@ -19,7 +23,12 @@
         "channel_id_three_team": 1018260589090455672,
         "channel_id_four_team": 1018260528260448306,
         "channel_send_result": 1071093189240442880,
-        "roles_team": ["первая команда", "вторая команда", "третья команда", "четвертая команда"]
+        "roles_team": [
+            "первая команда",
+            "вторая команда",
+            "третья команда",
+            "четвертая команда"
+        ]
     },
     "positionstext": {
         "title": "Доброе времени суток!",
@@ -37,7 +46,8 @@
     },
     "text": {
         "clear": "Удаление завершено. Уничтожено **{amount}** сообщений",
-        "successfully": "Успешно!"
+        "successfully": "Успешно!",
+        "error_access": "**Ошибка** У вас недостаточно прав для этой команды! \uD83D\uDE25"
     },
     "startgame": {
         "title": "Старт игры №{game_id}",
