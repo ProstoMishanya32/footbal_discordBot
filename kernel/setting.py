@@ -12,6 +12,9 @@ class Config(CreatingConfig):
         self.text = self.Text(config = self)
         self.startGame_with_capitans = self.StartGame_with_capitans(config = self)
         self.create_game = self.Create_Game(config = self)
+        self.next_game = self.Next_Game(config = self)
+        self.finish_matches = self.Finish_Matches(config = self)
+        self.select_result = self.Select_Results(config = self)
     class Bot:
         def __init__(self, config : CreatingConfig) -> None:
             self.token = config.config_field(key = 'token', layer = 'bot', default = 'Здесь ваш Discord Токен')
@@ -20,7 +23,9 @@ class Config(CreatingConfig):
         def __init__(self, config: CreatingConfig) -> None:
             self.admin_role = config.config_field(key = 'admin_role', layer = 'server', default= 'Здесь название Админ роли')
             self.moderator_role = config.config_field(key='moderator_role', layer='server', default='Здесь название Модератор роли')
+            self.channel_send_result = config.config_field(key='channel_send_result', layer='server', default='Канал с результамми')
             self.url_pict = config.config_field(key='url_pict', layer='server',  default='Ссылка на Аватарку вашего канала')
+            self.roles_team  = config.config_field(key='roles_team', layer='server',  default= [])
             self.channel_id_first_team =  config.config_field(key='channel_id_first_team', layer='server',  default='ID канала первой группы')
             self.channel_id_second_team = config.config_field(key='channel_id_second_team', layer='server',    default='ID канала второй группы')
             self.channel_id_three_team =  config.config_field(key='channel_id_three_team', layer='server',  default='ID канала третьей группы')
@@ -52,6 +57,16 @@ class Config(CreatingConfig):
         def __init__(self, config: CreatingConfig) -> None:
             self.title = config.config_field(key='title', layer='Create_Game', default='Заголовок создание игры')
             self.description = config.config_field(key='description', layer='Create_Game',default='Описание создание игры')
+    class Next_Game:
+        def __init__(self, config: CreatingConfig) -> None:
+            self.title = config.config_field(key='title', layer='Next_Game', default='Заголовок следующей игры')
+    class Finish_Matches:
+        def __init__(self, config: CreatingConfig) -> None:
+            self.title = config.config_field(key='title', layer='Finish_Matches', default='Заголовок завершения игр')
+    class Select_Results:
+        def __init__(self, config: CreatingConfig) -> None:
+            self.title = config.config_field(key='title', layer='Select_Results', default='Заголовок для выбора результата игр')
+            self.description = config.config_field(key='description', layer='Select_Results', default='Описание для выбора результата игр')
     class Text:
         def __init__(self, config: CreatingConfig) -> None:
             self.clear = config.config_field(key='clear', layer='text', default='')

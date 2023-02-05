@@ -52,15 +52,25 @@ async def exit_team(interaction, game):
     finally:
         await interaction.response.send_message(content=f"**Успешно** :thumbsup:", ephemeral=True)
 
+async def add_roles(interaction, role_name):
+    guild = interaction.guild
+    role = nextcord.utils.get(guild.roles, name = role_name)
+    member = interaction.user
+    for i in interaction.user.roles:
+        if str(i) in config.server.roles_team:
+            await member.remove_roles(nextcord.utils.get(guild.roles, name = str(i)))
+    await member.add_roles(nextcord.utils.get(guild.roles, name = role_name))
 class Start_capitans_two(nextcord.ui.View):
     def __init__(self, game, ):
         self.game = game
         super().__init__(timeout = None)
     @nextcord.ui.button(label = 'Первая команда', style = nextcord.ButtonStyle.green, custom_id = "first_team")
     async def first_team(self, button: nextcord.ui.Button, interaction: nextcord.Interaction):
+        await add_roles(interaction, config.server.roles_team[0])
         await selected_team(interaction, self.game, 1)
     @nextcord.ui.button(label = 'Вторая команда', style = nextcord.ButtonStyle.red, custom_id = "second_team")
     async def second_team(self, button: nextcord.ui.Button, interaction: nextcord.Interaction):
+        await add_roles(interaction, config.server.roles_team[1])
         await selected_team(interaction, self.game, 2)
     @nextcord.ui.button(label = 'Отказаться от участия', style = nextcord.ButtonStyle.grey, custom_id = "exit_game")
     async def exit_game(self, button: nextcord.ui.Button, interaction: nextcord.Interaction):
@@ -72,16 +82,20 @@ class Start_capitans_four(nextcord.ui.View):
         super().__init__(timeout = None)
     @nextcord.ui.button(label = 'Первая команда', style = nextcord.ButtonStyle.green, custom_id = "first_team_2")
     async def first_team(self, button: nextcord.ui.Button, interaction: nextcord.Interaction):
+        await add_roles(interaction, config.server.roles_team[0])
         await selected_team(interaction, self.game, 1)
     @nextcord.ui.button(label = 'Вторая команда', style = nextcord.ButtonStyle.red, custom_id = "second_team_2")
     async def second_team(self, button: nextcord.ui.Button, interaction: nextcord.Interaction):
+        await add_roles(interaction, config.server.roles_team[1])
         await selected_team(interaction, self.game, 2)
     @nextcord.ui.button(label = 'Третья команда', style = nextcord.ButtonStyle.green, custom_id = "three_team")
     async def three_team(self, button: nextcord.ui.Button, interaction: nextcord.Interaction):
+        await add_roles(interaction, config.server.roles_team[2])
         await selected_team(interaction, self.game, 3)
 
     @nextcord.ui.button(label = 'Четвертая команда', style = nextcord.ButtonStyle.red, custom_id = "four_team")
     async def four_team(self, button: nextcord.ui.Button, interaction: nextcord.Interaction):
+        await add_roles(interaction, config.server.roles_team[3])
         await selected_team(interaction, self.game, 4)
     @nextcord.ui.button(label = 'Отказаться от участия', style = nextcord.ButtonStyle.grey, custom_id = "exit_game_2")
     async def exit_game(self, button: nextcord.ui.Button, interaction: nextcord.Interaction):

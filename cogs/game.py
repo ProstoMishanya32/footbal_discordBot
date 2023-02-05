@@ -32,7 +32,7 @@ class Game(commands.Cog):
             capitans_list.append(f"**{db.get_amount_team_capitan(int(capitan.id), arg)} - {capitan.mention}**")
             capitans_list.sort()
         temp = '\n' #TODO убрать из комментариев про удаление
-        # db.delete_table(arg)  # Удаление таблицы с тренерами
+        db.delete_table(arg)  # Удаление таблицы с тренерами
         emb = nextcord.Embed( # Создание Embed
             title = config.startGame_with_capitans.title,
             description = f"*Команды --- Капитаны:*\n{temp.join(capitans_list)}\n{config.startGame_with_capitans.description}",

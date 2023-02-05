@@ -91,6 +91,23 @@ class DataBase:
         self.connection.commit()
         return game[-1][0]
 
+    def create_next_match(self, game, time, amount_team):
+        self.cur.execute('INSERT INTO games(game_time, amount_team) VALUES (?, ?)', (time, amount_team))
+        game_next = self.cur.execute('SELECT id_game  FROM games').fetchall()
+        self.cur.execute(f"""
+               CREATE TABLE IF NOT EXISTS
+               game_{game_next[-1][0]}(
+               discord_member TEXT,
+               discord_member_id INT PRIMARY KEY,
+               capitan INT,
+               team INT)""")
+        last_game  = self.cur.execute(f"SELECT discord_member, discord_member_id, capitan, team  FROM game_{game}").fetchall()
+        for raw in last_game:
+            self.cur.execute(f"INSERT INTO game_{game_next[-1][0]}(discord_member, discord_member_id, capitan, team) VALUES (?, ?, ?, ?)", (raw[0], raw[1], raw[2], raw[3]))
+        self.cur.execute(f"DROP TABLE game_{game}")
+        self.connection.commit()
+        return game_next[-1][0]
+
     def get_amount_match(self, game):
         amount = self.cur.execute(f"SELECT amount_team FROM games WHERE id_game = ?",  (game,)).fetchone()
         return amount[0]
@@ -102,6 +119,14 @@ class DataBase:
             return False
         else:
             return True
+
+    def get_id_players(self, game):
+        list_id = self.cur.execute(f"SELECT discord_member_id FROM game_{game}").fetchall()
+        return  list_id
+
+    def delete_match(self, game):
+        self.cur.execute(f"DROP TABLE game_{game}")
+        self.connection.commit()
 
     def finish_match(self, game, result_game, team, result, config):
         self.cur.execute(f"UPDATE games SET result = ? WHERE id_game = ?", (result_game, game))
@@ -137,7 +162,6 @@ class DataBase:
                         self.cur.execute(f"UPDATE raiting_capitans SET raiting = ? WHERE id_member = ?", (result, i[0]))
                     result = score_player[0][0] + config.server.score_draw_player
                     self.cur.execute(f"UPDATE raiting SET raiting = ? WHERE id_member = ?", (result, i[0]))
-        # self.cur.execute(f"DROP TABLE game_{game}")
         self.connection.commit()
 
     def add_player_in_team(self, game, player, user_id, capitan, team):
