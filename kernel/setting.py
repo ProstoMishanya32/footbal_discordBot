@@ -72,4 +72,5 @@ class Config(CreatingConfig):
         def __init__(self, config: CreatingConfig) -> None:
             self.clear = config.config_field(key='clear', layer='text', default='')
             self.successfully = config.config_field(key='successfully', layer='text', default='')
+            self.error_access =  config.config_field(key='error_access', layer='text', default='')
 
