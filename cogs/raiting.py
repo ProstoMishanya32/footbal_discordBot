@@ -19,14 +19,14 @@ class Raiting(commands.Cog):
     def __init__(self, bot: Bot) -> None:
         self.bot = bot
 
-    @nextcord.slash_command(name="raiting", description="Посмотреть свой рейтинг", guild_ids = config.bot.guilds)
+    @nextcord.slash_command(name="rating", description="Посмотреть свой рейтинг", guild_ids = config.bot.guilds)
     async def get_raiting_top_players(self, interaction: nextcord.Interaction ):
         await interaction.response.defer()
         result = db.get_raiting_top(interaction.user.id, str(interaction.user), "raiting")
         create_pict_raiting.create_pict(result, interaction, "player")
         await interaction.followup.send(file = nextcord.File(fp = 'user_card.png'))
 
-    @nextcord.slash_command(name="raiting_capitans", description="Посмотреть свой рейтинг Капитанов", guild_ids = config.bot.guilds)
+    @nextcord.slash_command(name="rating_capitans", description="Посмотреть свой рейтинг Капитанов", guild_ids = config.bot.guilds)
     async def get_raiting_top_capitans(self, interaction: nextcord.Interaction ):
         await interaction.response.defer()
         result = db.get_raiting_top(interaction.user.id, str(interaction.user), "raiting_capitans")
@@ -34,7 +34,7 @@ class Raiting(commands.Cog):
         await interaction.followup.send(file = nextcord.File(fp = 'user_card.png'))
 
 
-    @nextcord.slash_command(name="raiting_players", description=  "Посмотреть рейтинг всех игроков", guild_ids= config.bot.guilds)
+    @nextcord.slash_command(name="rating_players", description=  "Посмотреть рейтинг всех игроков", guild_ids= config.bot.guilds)
     async def get_raiting_top_players_all(self, interaction: nextcord.Interaction ):
         await interaction.response.defer()
         if check_admin(interaction.user.roles):
@@ -55,7 +55,7 @@ class Raiting(commands.Cog):
         else:
             await interaction.followup.send("**Ох нет:( У вас недостаточно прав**")
 
-    @nextcord.slash_command(name="raiting_capitans_all", description=  "Посмотреть рейтинг капитанов всех игроков", guild_ids= config.bot.guilds)
+    @nextcord.slash_command(name="rating_capitans_all", description=  "Посмотреть рейтинг капитанов всех игроков", guild_ids= config.bot.guilds)
     async def get_raiting_top_capitans_all(self, interaction: nextcord.Interaction ):
         await interaction.response.defer()
         result = db.get_raiting_top(None, None, "raiting_capitans")
