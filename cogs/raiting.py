@@ -12,26 +12,32 @@ import random
 
 def check_admin(roles):
     for i in roles:
-        if str(i) == config.server.admin_role or str(i) == config.server.moderator_role:
+        if str(i) == config.server.admin_role or str(i) == config.server.moderator_role or str(i) == config.server.moderator_role_2:
             return True
 
 class Raiting(commands.Cog):
     def __init__(self, bot: Bot) -> None:
         self.bot = bot
 
-    @nextcord.slash_command(name="rating", description="Посмотреть свой рейтинг", guild_ids = config.bot.guilds)
+    @nextcord.slash_command(name="rating", description='Посмотреть свой рейтинг || работает только  в канале "рейтинг" ', guild_ids = config.bot.guilds)
     async def get_raiting_top_players(self, interaction: nextcord.Interaction ):
         await interaction.response.defer()
-        result = db.get_raiting_top(interaction.user.id, str(interaction.user), "raiting")
-        create_pict_raiting.create_pict(result, interaction, "player")
-        await interaction.followup.send(file = nextcord.File(fp = 'user_card.png'))
+        if interaction.channel.id == config.server.channel_rating:
+            result = db.get_raiting_top(interaction.user.id, str(interaction.user), "raiting")
+            result_2 = db.get_raiting_top(None, None, "raiting")
+            create_pict_raiting.create_pict(result, result_2, interaction, "player")
+            await interaction.followup.send(file = nextcord.File(fp = 'user_card.png'))
 
-    @nextcord.slash_command(name="rating_capitans", description="Посмотреть свой рейтинг Капитанов", guild_ids = config.bot.guilds)
+
+    @nextcord.slash_command(name="rating_capitans", description='Посмотреть свой рейтинг капитанов || работает только  в канале "рейтинг" ', guild_ids = config.bot.guilds)
     async def get_raiting_top_capitans(self, interaction: nextcord.Interaction ):
         await interaction.response.defer()
-        result = db.get_raiting_top(interaction.user.id, str(interaction.user), "raiting_capitans")
-        create_pict_raiting.create_pict(result, interaction, "capitans")
-        await interaction.followup.send(file = nextcord.File(fp = 'user_card.png'))
+        if interaction.channel.id == config.server.channel_rating:
+            result = db.get_raiting_top(interaction.user.id, str(interaction.user), "raiting_capitans")
+            result_2 = db.get_raiting_top(None, None, "raiting_capitans")
+            create_pict_raiting.create_pict(result, result_2, interaction, "capitans")
+            await interaction.followup.send(file = nextcord.File(fp = 'user_card.png'))
+
 
 
     @nextcord.slash_command(name="rating_players", description=  "Посмотреть рейтинг всех игроков", guild_ids= config.bot.guilds)

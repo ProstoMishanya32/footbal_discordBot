@@ -5,7 +5,7 @@ import os
 import textwrap
 
 
-def create_pict(list_raiting, interaction, player):
+def create_pict(list_raiting, list_raiting_player, interaction, player):
     message_rank = ''
     message_user_rank = ''
     for character in list_raiting:
@@ -16,9 +16,10 @@ def create_pict(list_raiting, interaction, player):
         else:
             character['position'] = f"{character['position']}."
             character['raiting'] = f" - {character['raiting']} Очков"
-        if character['id_member'] == interaction.user.id: #Поиск ID пользователя
-            message_user_rank = f"{character['member']} {character['position']} Место\n\n{character['raiting']}"
         message_rank += f"{character['position']} {character['member']}{character['raiting']}\n\n"
+    for character in list_raiting_player:
+        if character['id_member'] == interaction.user.id: #Поиск ID пользователя
+            message_user_rank = f"{character['member']} {character['position']} Место\n\n{character['raiting']} очков"
     # Вставляем пустой фон
     image_background = Image.open('modules/image/canvas.png')
     img = image_background.resize((1080, 1499))

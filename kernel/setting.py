@@ -24,7 +24,9 @@ class Config(CreatingConfig):
         def __init__(self, config: CreatingConfig) -> None:
             self.admin_role = config.config_field(key = 'admin_role', layer = 'server', default= 'Здесь название Админ роли')
             self.moderator_role = config.config_field(key='moderator_role', layer='server', default='Здесь название Модератор роли')
-            self.channel_send_result = config.config_field(key='channel_send_result', layer='server', default='Канал с результамми')
+            self.moderator_role_2 = config.config_field(key='moderator_role_2', layer='server', default='Здесь название второй роли модератора')
+            self.channel_manage_game = config.config_field(key='channel_manage_game', layer='server', default='Канал, управления игрой')
+            self.channel_rating = config.config_field(key='channel_rating', layer='server', default='Канал, для отображения рейтинга игроков')
             self.url_pict = config.config_field(key='url_pict', layer='server',  default='Ссылка на Аватарку вашего канала')
             self.roles_team  = config.config_field(key='roles_team', layer='server',  default= [])
             self.channel_id_first_team =  config.config_field(key='channel_id_first_team', layer='server',  default='ID канала первой группы')

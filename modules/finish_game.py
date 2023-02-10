@@ -21,6 +21,7 @@ def check_command(team):
     return team
 
 def check_admin(roles):
+    сheck = False
     for i in roles: # Развертывание списка ролей
         if str(i) == config.server.moderator_role or str(i) == config.server.admin_role: #Проверка, есть ль данные роли
             check = True
@@ -74,7 +75,7 @@ async def finish_game(interaction, game, check, team, result):
             text=interaction.guild,
             icon_url=config.server.url_pict, )
         db.finish_match(game, result_finish, team, result, config)
-        channel = bot.get_channel(config.server.channel_send_result)
+        channel = bot.get_channel(config.server.channel_manage_game)
         await channel.send(embed = emb)
 
 

@@ -8,18 +8,23 @@ from bot import bot
 from datetime import datetime
 import pytz
 
+def check_admin(roles):
+    for i in roles:
+        if str(i) == config.server.admin_role or str(i) == config.server.moderator_role or str(i) == config.server.moderator_role_2:
+            return True
 
 async def create_game(interaction, amount_team):
-    result = db.create_game((datetime.now(pytz.timezone('Europe/Moscow')).strftime("%d.%m.%Y || %H:%M:%S")), amount_team)
-    view = start_game.Start_game(f"game_{result}")  # Подключение списка
-    emb = nextcord.Embed(  # Создание Embed
-        title=config.startgame.title.format(game_id=result),
-        description=config.startgame.description,
-        colour=000000)
-    emb.set_footer(
-        text=interaction.guild,
-        icon_url=config.server.url_pict, )
-    await interaction.response.edit_message(embed=emb, view=view)
+    if check_admin(interaction.user.roles):
+        result = db.create_game((datetime.now(pytz.timezone('Europe/Moscow')).strftime("%d.%m.%Y || %H:%M:%S")), amount_team)
+        view = start_game.Start_game(f"game_{result}")  # Подключение списка
+        emb = nextcord.Embed(  # Создание Embed
+            title=config.startgame.title.format(game_id=result),
+            description=config.startgame.description,
+            colour=000000)
+        emb.set_footer(
+            text=interaction.guild,
+            icon_url=config.server.url_pict, )
+        await interaction.response.edit_message(embed=emb, view=view)
 
 
 class Create_Game(nextcord.ui.View):
