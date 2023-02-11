@@ -125,8 +125,11 @@ class DataBase:
         return  list_id
 
     def delete_match(self, game):
-        self.cur.execute(f"DROP TABLE game_{game}")
-        self.connection.commit()
+        try:
+            self.cur.execute(f"DROP TABLE game_{game}")
+            self.connection.commit()
+        except sqlite3.OperationalError:
+            pass
 
     def finish_match(self, game, result_game, team, result, config):
         self.cur.execute(f"UPDATE games SET result = ? WHERE id_game = ?", (result_game, game))
@@ -163,6 +166,7 @@ class DataBase:
                     result = score_player[0][0] + config.server.score_draw_player
                     self.cur.execute(f"UPDATE raiting SET raiting = ? WHERE id_member = ?", (result, i[0]))
         self.connection.commit()
+
 
     def add_player_in_team(self, game, player, user_id, capitan, team):
         member = self.cur.execute(f"SELECT discord_member_id, capitan FROM game_{game} WHERE discord_member_id = ?", (user_id,)).fetchall()

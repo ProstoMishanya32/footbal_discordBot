@@ -39,7 +39,6 @@ async def next_match(interaction, game, amount_team):
     await interaction.response.edit_message(embed=emb, view = None)
 
 async def finish_matches(interaction, game):
-    #TODO прописать снятие ролей
     list_id = db.get_id_players(game)
     guild = interaction.guild
     for i in list_id:
