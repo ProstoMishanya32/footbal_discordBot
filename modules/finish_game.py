@@ -21,11 +21,11 @@ def check_command(team):
     return team
 
 def check_admin(roles):
-    сheck = False
+    check = False
     for i in roles: # Развертывание списка ролей
         if str(i) == config.server.moderator_role or str(i) == config.server.admin_role: #Проверка, есть ль данные роли
             check = True
-    return  check
+    return check
 
 
 async def next_match(interaction, game, amount_team):
